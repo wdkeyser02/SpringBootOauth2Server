@@ -80,6 +80,20 @@ public class SecurityConfig {
 	}
 	
 	@Bean
+	UserDetailsService userDetailsService() {
+		var user1 = User.withUsername("user")
+				.password(passwordEncoder().encode("password"))
+				.authorities("read")
+				.build();
+		return new InMemoryUserDetailsManager(user1);
+	}
+
+	@Bean
+	BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+	
+	@Bean
 	RegisteredClientRepository registeredClientRepository() {
 		RegisteredClient registeredClient = RegisteredClient.withId(UUID.randomUUID().toString())
 				.clientId("client")
@@ -129,20 +143,6 @@ public class SecurityConfig {
 	@Bean
 	OAuth2AuthorizationConsentService authorizationConsentService() {
 		return new InMemoryOAuth2AuthorizationConsentService();
-	}
-	
-	@Bean
-	UserDetailsService userDetailsService() {
-		var user1 = User.withUsername("user")
-				.password(passwordEncoder().encode("password"))
-				.authorities("read")
-				.build();
-		return new InMemoryUserDetailsManager(user1);
-	}
-
-	@Bean
-	BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
 	}
 	
 	@Bean
