@@ -3,7 +3,6 @@ package willydekeyser.config;
 import java.util.Collection;
 import java.util.HashSet;
 
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -26,7 +25,7 @@ public class JpaUserDetailsManager implements UserDetailsManager {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		SecurityUser user = userRepository.findByUsername(username);
 		if (!user.getUsername().equals(username)) {
-			throw new BadCredentialsException("User not found");
+			throw new UsernameNotFoundException("Access Denied");
 		}
 		Collection<GrantedAuthority> authoriies = new HashSet<>();
 		user.getAuthorities().forEach(auth -> authoriies.add(new SimpleGrantedAuthority(auth.getAuthority())));

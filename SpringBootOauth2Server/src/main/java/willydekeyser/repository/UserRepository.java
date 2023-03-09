@@ -7,5 +7,4 @@ import willydekeyser.entity.SecurityUser;
 public interface UserRepository extends JpaRepository<SecurityUser, Integer>{
 
 	SecurityUser findByUsername(String username);
-	void deleteByUsername(String username);
 }
