@@ -19,8 +19,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.server.authorization.InMemoryOAuth2AuthorizationConsentService;
-import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
@@ -72,10 +70,10 @@ public class SecurityConfig {
 		return AuthorizationServerSettings.builder().build();
 	}
 	
-	@Bean
-	OAuth2AuthorizationConsentService authorizationConsentService() {
-		return new InMemoryOAuth2AuthorizationConsentService();
-	}
+	//@Bean
+	//OAuth2AuthorizationConsentService authorizationConsentService() {
+	//	return new InMemoryOAuth2AuthorizationConsentService();
+	//}
 	
 	@Bean
 	OAuth2TokenCustomizer<JwtEncodingContext> tokenCustomizer() {
