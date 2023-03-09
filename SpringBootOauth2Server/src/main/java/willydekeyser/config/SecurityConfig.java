@@ -75,11 +75,6 @@ public class SecurityConfig {
 	}
 	
 	@Bean
-	OAuth2AuthorizationService authorizationService() {
-		return new InMemoryOAuth2AuthorizationService();
-	}
-	
-	@Bean
 	OAuth2AuthorizationConsentService authorizationConsentService() {
 		return new InMemoryOAuth2AuthorizationConsentService();
 	}
