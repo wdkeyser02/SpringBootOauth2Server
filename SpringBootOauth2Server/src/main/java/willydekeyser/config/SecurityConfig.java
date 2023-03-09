@@ -53,7 +53,6 @@ public class SecurityConfig {
 				.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login")))
 				.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
 				.build();
-
 	}
 	
 	@Bean
@@ -63,14 +62,13 @@ public class SecurityConfig {
 				.formLogin(withDefaults())
 				.authorizeHttpRequests(authorize ->authorize.anyRequest().authenticated())
 				.build();
-		
 	}
 	
 	@Bean
 	BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-		
+	
 	@Bean
 	AuthorizationServerSettings authorizationServerSettings() {
 		return AuthorizationServerSettings.builder().build();

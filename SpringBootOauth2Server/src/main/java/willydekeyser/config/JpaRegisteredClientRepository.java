@@ -39,6 +39,7 @@ public class JpaRegisteredClientRepository implements RegisteredClientRepository
 		this.objectMapper.registerModules(securityModules);
 		this.objectMapper.registerModule(new OAuth2AuthorizationServerJackson2Module());
 	}
+	
 	@Override
 	public void save(RegisteredClient registeredClient) {
 		Assert.notNull(registeredClient, "registeredClient cannot be null");
