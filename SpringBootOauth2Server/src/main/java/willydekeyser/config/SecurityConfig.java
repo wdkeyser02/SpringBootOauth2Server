@@ -70,11 +70,6 @@ public class SecurityConfig {
 		return AuthorizationServerSettings.builder().build();
 	}
 	
-	//@Bean
-	//OAuth2AuthorizationConsentService authorizationConsentService() {
-	//	return new InMemoryOAuth2AuthorizationConsentService();
-	//}
-	
 	@Bean
 	OAuth2TokenCustomizer<JwtEncodingContext> tokenCustomizer() {
 		return context -> {
