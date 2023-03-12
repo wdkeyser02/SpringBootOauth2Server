@@ -67,7 +67,16 @@ public class SecurityConfig {
 	
 	@Bean
 	AuthorizationServerSettings authorizationServerSettings() {
-		return AuthorizationServerSettings.builder().build();
+		return AuthorizationServerSettings.builder()
+				.issuer("http://localhost:9000")
+				.authorizationEndpoint("/oauth2/authorize")
+				.tokenEndpoint("/oauth2/token")
+				.tokenIntrospectionEndpoint("/oauth2/introspect")
+				.tokenRevocationEndpoint("/oauth2/revoke")
+				.jwkSetEndpoint("/oauth2/jwks")
+				.oidcUserInfoEndpoint("userinfo")
+				.oidcClientRegistrationEndpoint("clientinfo")
+				.build();
 	}
 	
 	@Bean
