@@ -74,8 +74,8 @@ public class SecurityConfig {
 				.tokenIntrospectionEndpoint("/oauth2/introspect")
 				.tokenRevocationEndpoint("/oauth2/revoke")
 				.jwkSetEndpoint("/oauth2/jwks")
-				.oidcUserInfoEndpoint("userinfo")
-				.oidcClientRegistrationEndpoint("clientinfo")
+				.oidcUserInfoEndpoint("/userinfo")
+				.oidcClientRegistrationEndpoint("/clientinfo")
 				.build();
 	}
 	
