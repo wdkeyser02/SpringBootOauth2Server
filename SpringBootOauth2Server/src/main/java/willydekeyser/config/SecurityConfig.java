@@ -57,8 +57,8 @@ public class SecurityConfig {
 	@Order(2)
 	SecurityFilterChain appSecurityFilterChain(HttpSecurity http) throws Exception {
 		return http
-				.formLogin(withDefaults())
 				.authorizeHttpRequests(authorize ->authorize.anyRequest().authenticated())
+				.formLogin(withDefaults())
 				.build();
 	}
 	
@@ -77,7 +77,7 @@ public class SecurityConfig {
 				.tokenRevocationEndpoint("/oauth2/revoke")
 				.jwkSetEndpoint("/oauth2/jwks")
 				.oidcUserInfoEndpoint("/userinfo")
-				.oidcClientRegistrationEndpoint("/clientinfo")
+				.oidcClientRegistrationEndpoint("/connect/register")
 				.build();
 	}
 	
