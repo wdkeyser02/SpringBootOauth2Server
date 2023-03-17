@@ -18,7 +18,9 @@ import org.springframework.security.config.annotation.web.configurers.oauth2.ser
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.core.oidc.endpoint.OidcParameterNames;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
@@ -40,7 +42,6 @@ public class SecurityConfig {
 	SecurityFilterChain asSecurityFilterChain(HttpSecurity http) throws Exception {
 		
 		OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
-
 		return http
 				.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
 				.oidc(withDefaults())
@@ -50,13 +51,13 @@ public class SecurityConfig {
 				.oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
 				.build();
 	}
-	
+
 	@Bean
 	@Order(2)
 	SecurityFilterChain appSecurityFilterChain(HttpSecurity http) throws Exception {
 		return http
-				.formLogin(withDefaults())
 				.authorizeHttpRequests(authorize ->authorize.anyRequest().authenticated())
+				.formLogin(withDefaults())
 				.build();
 	}
 	
@@ -75,7 +76,7 @@ public class SecurityConfig {
 				.tokenRevocationEndpoint("/oauth2/revoke")
 				.jwkSetEndpoint("/oauth2/jwks")
 				.oidcUserInfoEndpoint("/userinfo")
-				.oidcClientRegistrationEndpoint("/clientinfo")
+				//.oidcClientRegistrationEndpoint("/clientregistration")
 				.build();
 	}
 	
@@ -83,10 +84,10 @@ public class SecurityConfig {
 	OAuth2TokenCustomizer<JwtEncodingContext> tokenCustomizer() {
 		return context -> {
 			Authentication principal = context.getPrincipal();
-			if (context.getTokenType().getValue().equals("id_token")) {
+			if (OidcParameterNames.ID_TOKEN.equals(context.getTokenType().getValue())) {
 				context.getClaims().claim("Test", "Test Id Token");
 			}
-			if (context.getTokenType().getValue().equals("access_token")) {
+			if (OAuth2TokenType.ACCESS_TOKEN.equals(context.getTokenType())) {
 				context.getClaims().claim("Test", "Test Access Token");
 				Set<String> authorities = principal.getAuthorities().stream()
                         .map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
