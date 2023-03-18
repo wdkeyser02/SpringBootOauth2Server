@@ -53,6 +53,7 @@ public class SecurityConfig {
 						.userInfoEndpoint((userInfo) -> userInfo
 							.userInfoMapper(userInfoMapper()) 
 						)
+						.clientRegistrationEndpoint(withDefaults())
 					)
 				.and()
 				.exceptionHandling(e -> e
